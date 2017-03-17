@@ -6,9 +6,9 @@ var Enemy = function() {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-    this.y_pos_choice = [224,144,64];  //set of y positions the bug can appear at
+    this.y_choice = [224,144,64];  //set of y positions the bug can appear at
     this.x = 0; //initial x coordinate for bug
-    this.y = this.y_pos_choice[randomize(10,0)]; //randomize y coordinate to make y position unpredictable
+    this.y = this.y_choice[randomize(10,0)]; //randomize y coordinate to make y position unpredictable
     this.speed = randomize(6,2); //randomize speed value to make it unpredictable
 };
 
@@ -23,17 +23,17 @@ Enemy.prototype.update = function(dt) {
     //make the bug loop back to the left of the screen with unpredictable y position and speed
     if (this.x > 505) {
         this.x = 0; //reset x to the initial position
-        this.y = this.y_pos_choice[randomize(10,0)]; //choose random unpredictable y position
-        this.speed = randomize(6,2); //randomize the speed to make it unpredictable
+        this.y = this.y_choice[randomize(10,0)]; //choose random unpredictable y position
+        this.speed = randomize(6,1); //randomize the speed to make it unpredictable
     }
 
     this.collide();
 };
 
 Enemy.prototype.collide = function () {
-    var dist_x = (player.x)- this.x;
-    var dist_y = (player.y) - this.y;
-    if ( dist_x >= -51 && dist_x <= 51 && dist_y >= -42 && dist_y <= 42 ) {
+    var distx = (player.x)- this.x;
+    var disty = (player.y) - this.y;
+    if ( distx >= -51 && distx <= 51 && disty >= -42 && disty <= 42 ) {
         display('GAME OVER! REFRESH TO PLAY AGAIN');
         allEnemies = [];
         player.x = 202;//reset x position
@@ -67,13 +67,13 @@ Player.prototype.update = function(dt) {
     this.x += this.change_x; //change x position
     //the following code does not allow the player to move off the screen limits
     if (this.x  <= -48 || this.x  >= 452){
-        this.x -= this.change_x; //cancel out the change in position by subtracting it. This keeps the x position constant
+        this.x -= this.change_x; 
     }
     this.change_x = 0;//reset value
 
     this.y += this.change_y;//change y position
     if (this.y >= 454 || this.y < -40 ){
-        this.y -= this.change_y; //cancel out the change in position by subtracting it. This keeps the y position
+        this.y -= this.change_y;
 
     }
 
